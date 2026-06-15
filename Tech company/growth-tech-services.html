@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services — Growth Tech</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Tokens ────────────────────────────────────────── */
+    :root {
+      --bg:        #05060A;
+      --surface:   #0E1018;
+      --border:    #1C1F2E;
+      --lime:      #C6F135;
+      --lime-dim:  #9BBF24;
+      --white:     #F2F4F8;
+      --muted:     #6B7280;
+      --display:   'Syne', sans-serif;
+      --body:      'Inter', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--body);
+      font-weight: 300;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Nav ───────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 5vw;
+      background: rgba(5,6,10,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--lime); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+
+    nav ul a:hover { color: var(--white); }
+
+    .nav-cta {
+      background: var(--lime);
+      color: var(--bg) !important;
+      padding: 0.5rem 1.25rem;
+      border-radius: 4px;
+      font-weight: 500 !important;
+    }
+
+    .nav-cta:hover { background: var(--lime-dim); color: var(--bg) !important; }
+
+    /* ── Hero ──────────────────────────────────────────── */
+    .hero {
+      padding: 7rem 5vw 5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-family: var(--display);
+      font-size: clamp(2.75rem, 6vw, 5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      max-width: 18ch;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--lime);
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 52ch;
+      margin-bottom: 2.5rem;
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--lime);
+      color: var(--bg);
+      padding: 0.85rem 2rem;
+      border-radius: 4px;
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.01em;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-primary:hover { background: var(--lime-dim); transform: translateY(-1px); }
+
+    .btn-ghost {
+      border: 1px solid var(--border);
+      color: var(--white);
+      padding: 0.85rem 2rem;
+      border-radius: 4px;
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+
+    .btn-ghost:hover { border-color: var(--muted); transform: translateY(-1px); }
+
+    /* ── Stats strip ───────────────────────────────────── */
+    .stats {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+
+    .stat {
+      flex: 1;
+      min-width: 150px;
+      padding: 2rem 5vw;
+      border-right: 1px solid var(--border);
+    }
+
+    .stat:last-child { border-right: none; }
+
+    .stat-num {
+      font-family: var(--display);
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--lime);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 0.35rem;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ── Services grid ─────────────────────────────────── */
+    .services-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 6rem 5vw;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 3.5rem;
+      flex-wrap: wrap;
+    }
+
+    .section-header h2 {
+      font-family: var(--display);
+      font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      max-width: 22ch;
+    }
+
+    .section-header p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      max-width: 36ch;
+      line-height: 1.7;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .service-card {
+      background: var(--surface);
+      padding: 2.25rem 2rem;
+      position: relative;
+      transition: background 0.2s;
+      cursor: default;
+    }
+
+    .service-card:hover { background: #131622; }
+
+    .service-card:hover .service-icon { color: var(--lime); }
+
+    .service-icon {
+      font-size: 1.75rem;
+      margin-bottom: 1.25rem;
+      display: block;
+      transition: color 0.2s;
+      color: var(--muted);
+    }
+
+    .service-card h3 {
+      font-family: var(--display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.65rem;
+      letter-spacing: -0.01em;
+    }
+
+    .service-card p {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+
+    .service-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--lime-dim);
+      background: rgba(198,241,53,0.07);
+      border: 1px solid rgba(198,241,53,0.15);
+      padding: 0.25rem 0.6rem;
+      border-radius: 3px;
+    }
+
+    /* ── Process ───────────────────────────────────────── */
+    .process-section {
+      border-top: 1px solid var(--border);
+      padding: 6rem 5vw;
+    }
+
+    .process-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .process-inner .eyebrow { margin-bottom: 1rem; }
+
+    .process-inner h2 {
+      font-family: var(--display);
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 3.5rem;
+      max-width: 28ch;
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 2rem;
+    }
+
+    .step {
+      position: relative;
+      padding-left: 1rem;
+      border-left: 2px solid var(--border);
+      transition: border-color 0.2s;
+    }
+
+    .step:hover { border-color: var(--lime); }
+
+    .step-num {
+      font-family: var(--display);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 0.6rem;
+    }
+
+    .step h4 {
+      font-family: var(--display);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .step p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── CTA ───────────────────────────────────────────── */
+    .cta-section {
+      padding: 6rem 5vw;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+
+    .cta-inner {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    /* Signature element: the animated lime underline pulse */
+    .cta-inner h2 {
+      font-family: var(--display);
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+
+    .highlight-word {
+      position: relative;
+      display: inline-block;
+      color: var(--lime);
+    }
+
+    .highlight-word::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--lime);
+      border-radius: 2px;
+      animation: pulse-line 2.4s ease-in-out infinite;
+    }
+
+    @keyframes pulse-line {
+      0%, 100% { opacity: 1; transform: scaleX(1); }
+      50% { opacity: 0.4; transform: scaleX(0.75); }
+    }
+
+    .cta-inner p {
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+
+    /* ── Footer ────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 5vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    footer p { font-size: 0.8rem; color: var(--muted); }
+
+    footer a { color: var(--muted); text-decoration: none; font-size: 0.8rem; }
+    footer a:hover { color: var(--white); }
+
+    /* ── Reduced motion ────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      .highlight-word::after { animation: none; }
+      .btn-primary:hover, .btn-ghost:hover { transform: none; }
+    }
+
+    /* ── Mobile ────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      nav ul { display: none; }
+      .section-header { flex-direction: column; align-items: flex-start; }
+      .stats { flex-wrap: wrap; }
+      .stat { border-right: none; border-bottom: 1px solid var(--border); min-width: 50%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="#" class="logo">Growth<span>Tech</span></a>
+    <ul>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Services</a></li>
+      <li><a href="#">Case Studies</a></li>
+      <li><a href="#" class="nav-cta">Get Started</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <span class="eyebrow">Digital Marketing Services</span>
+    <h1>Marketing that <em>moves</em> the numbers</h1>
+    <p>Growth Tech builds data-driven campaigns that turn attention into revenue. From SEO to paid media, we engineer growth at every stage of the funnel.</p>
+    <div class="hero-actions">
+      <a href="#services" class="btn-primary">Explore Services</a>
+      <a href="#contact" class="btn-ghost">Talk to us</a>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num">3.8×</div>
+      <div class="stat-label">Avg. ROAS for clients</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">150+</div>
+      <div class="stat-label">Campaigns launched</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">94%</div>
+      <div class="stat-label">Client retention rate</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">12M+</div>
+      <div class="stat-label">Leads generated</div>
+    </div>
+  </div>
+
+  <!-- Services -->
+  <section class="services-section" id="services">
+    <div class="section-header">
+      <h2>What we do for you</h2>
+      <p>Every service is tied to a metric that matters — not just impressions, but outcomes you can point to.</p>
+    </div>
+
+    <div class="services-grid">
+
+      <div class="service-card">
+        <span class="service-icon">⚡</span>
+        <h3>Search Engine Optimization</h3>
+        <p>Rank for the searches your buyers are already making. We handle technical audits, content strategy, and authority building to drive compounding organic growth.</p>
+        <div class="service-tags">
+          <span class="tag">Technical SEO</span>
+          <span class="tag">Content</span>
+          <span class="tag">Link Building</span>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <span class="service-icon">🎯</span>
+        <h3>Paid Media & PPC</h3>
+        <p>Google Ads, Meta, LinkedIn — we design and optimize campaigns with rigorous A/B testing and real-time bid management to stretch every shilling of ad spend.</p>
+        <div class="service-tags">
+          <span class="tag">Google Ads</span>
+          <span class="tag">Meta Ads</span>
+          <span class="tag">LinkedIn</span>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <span class="service-icon">✍️</span>
+        <h3>Content Marketing</h3>
+        <p>We produce editorial, video scripts, and thought-leadership assets that attract, educate, and convert — built around keyword intent and your brand voice.</p>
+        <div class="service-tags">
+          <span class="tag">Blog</span>
+          <span class="tag">Video</span>
+          <span class="tag">Whitepapers</span>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <span class="service-icon">📱</span>
+        <h3>Social Media Management</h3>
+        <p>Consistent, on-brand presence across the platforms your audience uses. We plan, create, schedule, and report — so your team stays focused elsewhere.</p>
+        <div class="service-tags">
+          <span class="tag">Instagram</span>
+          <span class="tag">X / Twitter</span>
+          <span class="tag">TikTok</span>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <span class="service-icon">📧</span>
+        <h3>Email & Marketing Automation</h3>
+        <p>Nurture sequences, drip campaigns, and lifecycle emails that convert leads and retain customers — wired up to your CRM and tracked to the cent.</p>
+        <div class="service-tags">
+          <span class="tag">Klaviyo</span>
+          <span class="tag">HubSpot</span>
+          <span class="tag">Automation</span>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <span class="service-icon">📊</span>
+        <h3>Analytics & Growth Consulting</h3>
+        <p>From GA4 setups to custom dashboards and quarterly strategy reviews, we make sure every decision you take is backed by clean, trustworthy data.</p>
+        <div class="service-tags">
+          <span class="tag">GA4</span>
+          <span class="tag">Looker Studio</span>
+          <span class="tag">Strategy</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="process-section">
+    <div class="process-inner">
+      <span class="eyebrow">How we work</span>
+      <h2>From brief to results in four steps</h2>
+
+      <div class="process-steps">
+        <div class="step">
+          <div class="step-num">Step 01</div>
+          <h4>Discovery</h4>
+          <p>We audit your current presence, competitors, and audience data to find your biggest growth lever.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">Step 02</div>
+          <h4>Strategy</h4>
+          <p>A 90-day roadmap with channel mix, KPIs, and budget allocation — signed off before any work starts.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">Step 03</div>
+          <h4>Execution</h4>
+          <p>Campaigns go live, content ships, and paid ads run — with weekly check-ins and live reporting dashboards.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">Step 04</div>
+          <h4>Optimise</h4>
+          <p>We analyse performance, cut what's not working, and double down on what is — every sprint, every month.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="contact">
+    <div class="cta-inner">
+      <h2>Ready to <span class="highlight-word">grow</span>?</h2>
+      <p>Book a free 30-minute strategy call. We'll show you exactly where your biggest gains are hiding — no strings attached.</p>
+      <a href="mailto:hello@growthtech.co" class="btn-primary">Book a free call</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2026 Growth Tech. All rights reserved.</p>
+    <div style="display:flex; gap:1.5rem;">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="mailto:hello@growthtech.co">hello@growthtech.co</a>
+    </div>
+  </footer>
+
+</body>
+</html>
