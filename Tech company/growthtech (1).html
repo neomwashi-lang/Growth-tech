@@ -50,6 +50,42 @@
       transition: opacity 0.2s;
     }
 
+    .global-hover-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.31;
+      transition: opacity 0.4s ease, background 0.4s ease;
+      background: radial-gradient(circle at var(--glow-x, 50%) var(--glow-y, 50%), rgba(57,255,20,0.1), transparent 22%), radial-gradient(circle at var(--glow-x, 50%) var(--glow-y, 50%), rgba(57,255,20,0.05), transparent 42%);
+      background-repeat: no-repeat;
+      mix-blend-mode: screen;
+    }
+
+    .global-hover-glow.media-active {
+      opacity: 0.8;
+      animation: glowPulse 1.8s ease-out infinite;
+    }
+
+    @keyframes glowPulse {
+      0% {
+        background: radial-gradient(circle at var(--glow-x, 50%) var(--glow-y, 50%), rgba(57,255,20,0.44), transparent 18%), radial-gradient(circle at var(--glow-x, 50%) var(--glow-y, 50%), rgba(57,255,20,0.225), transparent 35%);
+        opacity: 0.85;
+      }
+      40% {
+        background: radial-gradient(circle at var(--glow-x, 50%) var(--glow-y, 50%), rgba(57,255,20,0.69), transparent 20%), radial-gradient(circle at var(--glow-x, 50%) var(--glow-y, 50%), rgba(57,255,20,0.275), transparent 40%);
+        opacity: 0.875;
+      }
+      80% {
+        background: radial-gradient(circle at var(--glow-x, 50%) var(--glow-y, 50%), rgba(57,255,20,0.225), transparent 32%), radial-gradient(circle at var(--glow-x, 50%) var(--glow-y, 50%), rgba(57,255,20,0.1), transparent 50%);
+        opacity: 0.625;
+      }
+      100% {
+        background: radial-gradient(circle at var(--glow-x, 50%) var(--glow-y, 50%), rgba(57,255,20,0.125), transparent 42%), radial-gradient(circle at var(--glow-x, 50%) var(--glow-y, 50%), rgba(57,255,20,0.05), transparent 60%);
+        opacity: 0.31;
+      }
+    }
+
     /* ══ NAV ═════════════════════════════════════════════════════ */
     nav {
       position: sticky; top: 0; z-index: 500;
@@ -850,6 +886,201 @@
 
     .cta-band p { font-size: 0.85rem; color: var(--muted); }
 
+    /* ══ MEDIA GALLERY ═══════════════════════════════════════════ */
+    .media-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-top: 2.5rem;
+    }
+
+    /* Hero mini media placement and mini pulse */
+    .hero-media-mini {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 0.6rem;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .hero-media-mini video,
+    .hero-media-mini img {
+      width: 120px;
+      height: 72px;
+      object-fit: cover;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.45s cubic-bezier(.2,.9,.2,1), box-shadow 0.45s ease, opacity 0.3s;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+      position: relative;
+      display: block;
+    }
+
+    .hero-media-mini img[alt="Success"] {
+      width: 72px; height:72px; object-fit:contain;
+    }
+
+    .hero-media-mini video:hover,
+    .hero-media-mini img:hover {
+      transform: scale(1.06) translateY(-4px);
+      box-shadow: 0 18px 46px rgba(57,255,20,0.12);
+      animation: miniPulse 1.6s ease-out infinite;
+    }
+
+    @keyframes miniPulse {
+      0% { box-shadow: 0 6px 18px rgba(57,255,20,0.06), inset 0 0 0 rgba(57,255,20,0); }
+      50% { box-shadow: 0 18px 46px rgba(57,255,20,0.12), inset 0 0 18px rgba(57,255,20,0.03); }
+      100% { box-shadow: 0 6px 18px rgba(57,255,20,0.06), inset 0 0 0 rgba(57,255,20,0); }
+    }
+
+    @keyframes pulseGlow {
+      0% { transform: scale(0.8); opacity: 0.7; }
+      50% { transform: scale(1.35); opacity: 0.35; }
+      100% { transform: scale(1.9); opacity: 0; }
+    }
+
+    .media-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform 1.2s ease-out, border-color 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      height: clamp(220px, 30vw, 360px);
+      display: flex;
+      flex-direction: column;
+      perspective: 1200px;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+
+    .media-item:hover {
+      border-color: var(--green);
+      transform: rotateY(360deg) translateY(-4px);
+      box-shadow: 0 12px 40px rgba(57,255,20,0.24);
+    }
+
+    .media-item-content {
+      flex: 1;
+      background: linear-gradient(135deg, #0e1e0e, #1a2e1a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      --glow-x: 50%;
+      --glow-y: 50%;
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+
+    .media-item-content video,
+    .media-item-content img {
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+    }
+
+    .media-item-content::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at var(--glow-x) var(--glow-y), rgba(57,255,20,0.32), transparent 45%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      z-index: 0;
+      filter: blur(28px);
+      transform: scale(0.9);
+    }
+
+    .media-item:hover .media-item-content::before {
+      opacity: 1;
+      animation: pulseGlow 1.6s ease-out infinite;
+    }
+
+    .media-item-content::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.3) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .media-item-content video,
+    .media-item-content img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .media-item-content video {
+      background: #0d110d;
+    }
+
+    .media-icon {
+      font-size: 3rem;
+      color: var(--green);
+      opacity: 0.8;
+      transition: opacity 0.2s, transform 0.2s;
+      position: relative;
+      z-index: 1;
+    }
+
+    .media-item:hover .media-icon {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .media-item-footer {
+      display: none;
+    }
+
+    .media-item-type {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 0.4rem;
+    }
+
+    .media-item-title {
+      font-family: var(--display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.3;
+    }
+
+    .media-item-description {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.4rem;
+      line-height: 1.5;
+    }
+
+    .media-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.75rem;
+    }
+
+    .media-tag {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: rgba(57,255,20,0.06);
+      border: 1px solid rgba(57,255,20,0.1);
+      padding: 0.15rem 0.4rem;
+      border-radius: 2px;
+    }
+
     /* CTA section */
     .cta-section {
       text-align: center;
@@ -943,6 +1174,7 @@
       .contact-layout { grid-template-columns: 1fr; }
       .features-grid { grid-template-columns: 1fr 1fr; }
       .results-grid { grid-template-columns: 1fr 1fr; }
+      .media-gallery { grid-template-columns: 1fr 1fr; }
     }
 
     @media (max-width: 640px) {
@@ -963,6 +1195,7 @@
       .stat-item { min-width: 50%; border-right: none; border-bottom: 1px solid var(--border); }
       .form-row { grid-template-columns: 1fr; }
       .about-values-grid { grid-template-columns: 1fr; }
+      .media-gallery { grid-template-columns: 1fr; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -976,6 +1209,7 @@
 
   <!-- Cursor Glow -->
   <div class="cursor-glow" id="cursorGlow"></div>
+  <div class="global-hover-glow" id="globalGlow"></div>
 
   <!-- ══ NAV ══════════════════════════════════════════════════════ -->
   <nav>
@@ -1007,11 +1241,11 @@
           <span class="hero-brand-name">GROWTH<span>TECH</span></span>
         </div>
         <span class="hero-eyebrow">Our Dream, Your Satisfaction</span>
-        <h1>Launch faster.<br><em>Grow smarter.</em><br>Build with confidence.</h1>
-        <p class="lead">Growth Tech helps teams turn ideas into measurable results — through reliable web experiences, modern UI, and performance-first development.</p>
+        <h1> Build faster.<br><em>Grow smarter.</em><br>Work with confidence.</h1>
+        <p class="lead">Growth Tech helps teams turn ideas into measurable results — through reliable web experiences, modern UI, Experienced financia specialists and performance-first development.</p>
         <div class="hero-actions">
           <a href="#contact" class="btn-primary">
-            Start Your Project
+            join us now
             <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
           </a>
           <a href="#services" class="btn-ghost">See What We Do</a>
@@ -1019,6 +1253,7 @@
         <ul class="trust-list">
           <li><span class="dot"></span> Responsive design</li>
           <li><span class="dot"></span> Fast delivery</li>
+          <li><span class="dot"></span> Reliable number accounting</li>
           <li><span class="dot"></span> Clean, maintainable code</li>
         </ul>
       </div>
@@ -1027,6 +1262,17 @@
         <div class="hero-card-chips">
           <span class="chip">Performance</span>
           <span class="chip chip-alt">Design</span>
+        </div>
+
+        <!-- Mini media preview moved to Media Gallery -->
+        <div class="hero-media-mini">
+          <video class="mini-video" autoplay muted loop playsinline>
+            <source src="guryaadsan_pindown.io_1781590272.mp4" type="video/mp4">
+          </video>
+
+          <video class="mini-video" autoplay muted loop playsinline>
+            <source src="VivekEditorX0_pindown.io_1781590184.mp4" type="video/mp4">
+          </video>
         </div>
         <div class="mock-lines">
           <div class="mock-line w-80"></div>
@@ -1165,6 +1411,68 @@
             <span class="tag">Accessible</span>
             <span class="tag">Maintainable</span>
             <span class="tag">Performance</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Media Gallery -->
+      <div style="margin-top:3rem">
+        <span class="eyebrow" style="margin-bottom:1rem;display:inline-flex">See it in action</span>
+        <h2 style="font-family:var(--display);font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;letter-spacing:-0.03em;line-height:1.1;margin-bottom:1rem">Why not try the best?</h2>
+        <p style="font-size:0.95rem;color:var(--muted);max-width:52ch;line-height:1.75;margin-bottom:2rem">Join us and experience the fluidity of our approach.</p>
+        
+        <div class="media-gallery">
+          <!-- Video 1 -->
+          <div class="media-item">
+            <div class="media-item-content">
+              <video width="100%" height="100%" style="object-fit:cover;position:relative;z-index:1" autoplay muted loop playsinline>
+                <source src="benampouala_pindown.io_1781525533.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+
+          <!-- Video 2 -->
+          <div class="media-item">
+            <div class="media-item-content">
+              <video width="100%" height="100%" style="object-fit:cover;position:relative;z-index:1" autoplay muted loop playsinline>
+                <source src="boostgasmileage_pindown.io_1781524956.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+
+          <!-- Image 1 -->
+          <div class="media-item">
+            <div class="media-item-content">
+              <img src="8eaa303904773686d1a99e9a3a8e4ee7.jpg" style="width:100%;height:100%;object-fit:cover;position:relative;z-index:1" alt="Marketing Case Study">
+            </div>
+          </div>
+
+          <!-- Image 2 -->
+          <div class="media-item">
+            <div class="media-item-content">
+              <img src="91940a743f774821bc823ffba505778b.jpg" style="width:100%;height:100%;object-fit:cover;position:relative;z-index:1" alt="Analytics Dashboard">
+            </div>
+          </div>
+
+          
+
+          <!-- GIF Showcase -->
+          <div class="media-item">
+            <div class="media-item-content">
+              <img src="Dollar.gif" style="width:80%;height:auto;position:relative;z-index:1" alt="Success Animation">
+            </div>
+          </div>
+
+          <!-- CTA Item -->
+          <div class="media-item" style="background:linear-gradient(135deg,rgba(57,255,20,0.1),rgba(57,255,20,0.05));border:1px solid rgba(57,255,20,0.25);cursor:pointer" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+            <div class="media-item-content" style="background:transparent">
+              <div style="text-align:center">
+                <div style="font-size:2.5rem;margin-bottom:0.5rem">🚀</div>
+                <div style="font-family:var(--display);font-weight:700;color:var(--green);font-size:1.1rem">Ready to grow?</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1500,9 +1808,14 @@
   <script>
     // Cursor glow
     const glow = document.getElementById('cursorGlow');
+    const globalGlow = document.getElementById('globalGlow');
     document.addEventListener('mousemove', e => {
       glow.style.left = e.clientX + 'px';
       glow.style.top  = e.clientY + 'px';
+      const viewportX = (e.clientX / window.innerWidth) * 100;
+      const viewportY = (e.clientY / window.innerHeight) * 100;
+      globalGlow.style.setProperty('--glow-x', `${viewportX}%`);
+      globalGlow.style.setProperty('--glow-y', `${viewportY}%`);
     });
 
     // Hamburger menu
@@ -1544,6 +1857,37 @@
       el.style.transform = 'translateY(20px)';
       el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
       observer.observe(el);
+    });
+
+    let glowTimeout;
+
+    document.querySelectorAll('.media-item').forEach(item => {
+      const content = item.querySelector('.media-item-content');
+      if (!content) return;
+
+      item.addEventListener('mousemove', e => {
+        const rect = item.getBoundingClientRect();
+        const localX = ((e.clientX - rect.left) / rect.width) * 100;
+        const localY = ((e.clientY - rect.top) / rect.height) * 100;
+        const viewportX = (e.clientX / window.innerWidth) * 100;
+        const viewportY = (e.clientY / window.innerHeight) * 100;
+        content.style.setProperty('--glow-x', `${localX}%`);
+        content.style.setProperty('--glow-y', `${localY}%`);
+        globalGlow.style.setProperty('--glow-x', `${viewportX}%`);
+        globalGlow.style.setProperty('--glow-y', `${viewportY}%`);
+        globalGlow.classList.add('media-active');
+        clearTimeout(glowTimeout);
+        glowTimeout = setTimeout(() => {
+          globalGlow.classList.remove('media-active');
+        }, 1200);
+      });
+
+      item.addEventListener('mouseleave', () => {
+        clearTimeout(glowTimeout);
+        glowTimeout = setTimeout(() => {
+          globalGlow.classList.remove('media-active');
+        }, 900);
+      });
     });
   </script>
 </body>
